@@ -3172,16 +3172,19 @@
 
 
 
-            <div class="controls-row" style="border:none; padding:0; margin-bottom:0.8rem; background:transparent;">
-
+            <div class="controls-row" style="border:none; padding:0; margin-bottom:0.8rem; background:transparent; display:flex; justify-content:space-between; align-items:center;">
                 <div class="search-container">
-
                     <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
-
                     <input type="text" class="search-input" id="search-box" placeholder="Buscar asignatura en la matriz..." oninput="handleSearch()">
-
                 </div>
-
+                <div class="selector-group" style="margin-left: auto; display: flex; align-items: center; gap: 0.75rem;">
+                    <span class="selector-label" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">Filtrar Matriz:</span>
+                    <div class="discipline-selector">
+                        <button class="discipline-btn active" data-discipline="biologia">Biología</button>
+                        <button class="discipline-btn" data-discipline="quimica">Química</button>
+                        <button class="discipline-btn" data-discipline="fisica">Física</button>
+                    </div>
+                </div>
             </div>
 
 
@@ -3890,45 +3893,31 @@ const asignaturas = [
     // Set up discipline buttons
 
     function setupDisciplineSelectors() {
-
         const buttons = document.querySelectorAll('.discipline-btn');
-
         buttons.forEach(btn => {
-
             btn.addEventListener('click', () => {
-
+                const disc = btn.getAttribute('data-discipline');
+                
+                // Synchronize all selectors with the selected discipline
                 buttons.forEach(b => b.classList.remove('active'));
-
-                btn.classList.add('active');
-
-                currentDiscipline = btn.getAttribute('data-discipline');
-
+                document.querySelectorAll(`.discipline-btn[data-discipline="${disc}"]`).forEach(b => {
+                    b.classList.add('active');
+                });
                 
-
+                currentDiscipline = disc;
+                
                 selectedCourse = null;
-
                 selectedStandard = null;
-
                 
-
                 renderMalla();
-
                 renderMatrix();
-
                 showWelcome();
-
                 updateCoverageWidgets();
-
                 
-
                 // Synchronize accordion tab with active discipline
-
                 setAccordionTab(currentDiscipline);
-
             });
-
         });
-
     }
 
 
