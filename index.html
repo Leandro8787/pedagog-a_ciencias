@@ -1137,25 +1137,55 @@
 
 
         .malla-grid {
-
-            display: grid;
-
-            grid-template-columns: repeat(10, minmax(185px, 1fr));
-
+            display: flex;
             gap: 1rem;
-
+            position: relative;
+            align-items: stretch;
+            padding-bottom: 3.8rem;
         }
 
-
-
         .sem-column {
-
+            flex: 1 0 185px;
             display: flex;
-
             flex-direction: column;
-
             gap: 1rem;
+            position: relative;
+        }
 
+        .malla-divider {
+            position: relative;
+            width: 2px;
+            flex: 0 0 2px;
+            margin: 0 0.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .divider-line {
+            width: 0;
+            height: 100%;
+            border-left: 2.5px dashed var(--upla-cyan);
+            opacity: 0.75;
+        }
+
+        .divider-label {
+            position: absolute;
+            bottom: -3.5rem;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            font-size: 0.65rem;
+            font-weight: 800;
+            color: var(--upla-mix-20-80);
+            text-align: center;
+            background: #ffffff;
+            padding: 0.3rem 0.6rem;
+            border: 1.5px solid var(--upla-cyan);
+            border-radius: 6px;
+            box-shadow: var(--shadow-md);
+            z-index: 10;
+            line-height: 1.2;
         }
 
 
@@ -1519,23 +1549,15 @@
 
 
         .sem-sum {
-
             text-align: center;
-
             font-size: 0.85rem;
-
             font-weight: 800;
-
             color: var(--text-secondary);
-
             padding: 0.6rem;
-
             background: #f8fafc;
-
             border-radius: 10px;
-
             border: 1px dashed var(--border-color);
-
+            margin-top: auto;
         }
 
 
@@ -4127,6 +4149,40 @@ const asignaturas = [
 
             mallaGrid.appendChild(col);
 
+            if (s === 4) {
+                const divider = document.createElement('div');
+                divider.className = 'malla-divider';
+                divider.innerHTML = `
+                    <div class="divider-line"></div>
+                    <div class="divider-label">
+                        <strong>Hito formativo</strong><br>
+                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo inicial)</span>
+                    </div>
+                `;
+                mallaGrid.appendChild(divider);
+            } else if (s === 8) {
+                const divider = document.createElement('div');
+                divider.className = 'malla-divider';
+                divider.innerHTML = `
+                    <div class="divider-line"></div>
+                    <div class="divider-label">
+                        <strong>Hito formativo II</strong><br>
+                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo intermedio)</span>
+                    </div>
+                `;
+                mallaGrid.appendChild(divider);
+            } else if (s === 10) {
+                const divider = document.createElement('div');
+                divider.className = 'malla-divider';
+                divider.innerHTML = `
+                    <div class="divider-line"></div>
+                    <div class="divider-label">
+                        <strong>Hito formativo III</strong><br>
+                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo final)</span>
+                    </div>
+                `;
+                mallaGrid.appendChild(divider);
+            }
         }
 
     }
