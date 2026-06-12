@@ -1526,6 +1526,21 @@
 
         }
 
+        .back-item-bio {
+            border-color: var(--color-bio) !important;
+            background-color: var(--color-bio-glow) !important;
+        }
+
+        .back-item-qui {
+            border-color: var(--color-qui) !important;
+            background-color: var(--color-qui-glow) !important;
+        }
+
+        .back-item-fis {
+            border-color: var(--color-fis) !important;
+            background-color: var(--color-fis-glow) !important;
+        }
+
 
 
         .back-item.empty {
@@ -4094,8 +4109,8 @@ const asignaturas = [
                     mappingsAll.forEach(m => {
 
                         const item = document.createElement('div');
-
-                        item.className = 'back-item';
+                        const prefix = m.std.split('_')[0].toLowerCase();
+                        item.className = `back-item back-item-${prefix}`;
 
                         const kw = keywords[m.std] || "";
 
