@@ -2677,7 +2677,95 @@
 
         }
 
-    </style>
+    
+        /* Print Styles for A3 Landscape PDF */
+        @media print {
+            @page {
+                size: A3 landscape;
+                margin: 10mm;
+            }
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                padding: 0 !important;
+                margin: 0 !important;
+                min-height: auto !important;
+            }
+            header, 
+            .guide-panel, 
+            .controls-row, 
+            .detail-panel, 
+            .identity-box, 
+            .accordion-root, 
+            .accordion-tabs,
+            footer,
+            #standards-modal {
+                display: none !important;
+            }
+            .malla-scroller {
+                overflow: visible !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+            .malla-grid {
+                display: flex !important;
+                flex-wrap: nowrap !important;
+                gap: 0.4rem !important;
+                width: 100% !important;
+                padding-bottom: 0 !important;
+            }
+            .sem-column {
+                flex: 1 1 0% !important;
+                min-width: 0 !important;
+                gap: 0.4rem !important;
+            }
+            .sem-header {
+                font-size: 0.7rem !important;
+                padding: 0.4rem 0.2rem !important;
+                border-radius: 6px !important;
+            }
+            .course-card-container {
+                height: 95px !important;
+            }
+            .course-card {
+                box-shadow: none !important;
+                border: 1px solid #cbd5e1 !important;
+                border-radius: 8px !important;
+            }
+            .card-front {
+                padding: 0.4rem !important;
+                gap: 0.25rem !important;
+            }
+            .course-name {
+                font-size: 0.58rem !important;
+                line-height: 1.2 !important;
+            }
+            .course-footer {
+                font-size: 0.5rem !important;
+            }
+            .sem-sum {
+                font-size: 0.7rem !important;
+                padding: 0.4rem !important;
+                border-radius: 6px !important;
+            }
+            .malla-divider {
+                margin: 0 0.2rem !important;
+                width: 1px !important;
+                flex: 0 0 1px !important;
+            }
+            .divider-line {
+                border-left-width: 1.5px !important;
+            }
+            .divider-label {
+                bottom: -2.8rem !important;
+                font-size: 0.52rem !important;
+                padding: 0.15rem 0.4rem !important;
+                border-radius: 4px !important;
+                border-width: 1px !important;
+            }
+        }
+    
+</style>
 
 </head>
 
