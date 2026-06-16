@@ -1137,11 +1137,46 @@
 
 
         .malla-grid {
-            display: flex;
-            gap: 1rem;
+            display: grid;
+            grid-template-columns: 108px repeat(10, 1fr);
+            gap: 0.5rem;
             position: relative;
-            align-items: stretch;
-            padding-bottom: 3.8rem;
+            align-items: start;
+            padding-bottom: 1rem;
+        }
+
+        .area-row-label {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding: 0.3rem 0.5rem;
+            font-size: 0.62rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-align: right;
+            line-height: 1.25;
+            min-height: 125px;
+        }
+
+        .area-label-header { min-height: unset; }
+
+        .malla-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .malla-cell-empty {
+            height: 125px;
+            border: 1.5px dashed #e2e8f0;
+            border-radius: 10px;
+            opacity: 0.35;
+        }
+
+        .hito-after {
+            border-right: 2px dashed var(--upla-cyan);
+            padding-right: 0.4rem;
+            margin-right: 0.15rem;
         }
 
         .sem-column {
@@ -2708,16 +2743,23 @@
                 margin: 0 !important;
             }
             .malla-grid {
-                display: flex !important;
-                flex-wrap: nowrap !important;
-                gap: 0.4rem !important;
+                display: grid !important;
+                grid-template-columns: 80px repeat(10, 1fr) !important;
+                gap: 0.3rem !important;
                 width: 100% !important;
                 padding-bottom: 0 !important;
             }
-            .sem-column {
-                flex: 1 1 0% !important;
-                min-width: 0 !important;
-                gap: 0.4rem !important;
+            .area-row-label {
+                font-size: 0.52rem !important;
+                padding: 0.2rem 0.3rem !important;
+                min-height: 95px !important;
+            }
+            .malla-cell-empty {
+                height: 95px !important;
+            }
+            .hito-after {
+                border-right-width: 1.5px !important;
+                padding-right: 0.2rem !important;
             }
             .sem-header {
                 font-size: 0.7rem !important;
@@ -4254,237 +4296,151 @@ const asignaturas = [
 
         mallaGrid.innerHTML = '';
 
-        
+        const areaOrder = ['instrumental', 'pedagogica', 'basicas_bq', 'basicas_fa', 'practicas', 'sello', 'cierre'];
+        const areaLabels = {
+            'instrumental':  'Instrumental',
+            'pedagogica':    'Pedagógica',
+            'basicas_bq':    'CC. Básicas BQ',
+            'basicas_fa':    'CC. Básicas FA',
+            'practicas':     'Prácticas',
+            'sello':         'Sello / Sostenible',
+            'cierre':        'Cierre / Titulación'
+        };
 
-        const semCourses = {};
+        // Lookup: area -> sem -> [courses]
+        const coursesByAreaSem = {};
+        areaOrder.forEach(area => {
+            coursesByAreaSem[area] = {};
+            for (let s = 1; s <= 10; s++) {
+                coursesByAreaSem[area][s] = asignaturas.filter(a => a.area === area && a.sem === s);
+            }
+        });
 
-                for(let s = 1; s <= 10; s++) {
-            semCourses[s] = asignaturas.filter(a => a.sem === s);
-            // Sort to place Formación Instrumental first, Formación Pedagógica second, and Ciencias Básicas BQ third
-            const areaPriority = { 'instrumental': 1, 'pedagogica': 2, 'basicas_bq': 3 };
-            semCourses[s].sort((a, b) => {
-                const pA = areaPriority[a.area] || 99;
-                const pB = areaPriority[b.area] || 99;
-                return pA - pB;
-            });
+        const hitoAfter = new Set([4, 8]);
+
+        // ── Fila de cabecera (sem headers) ──
+        const cornerCell = document.createElement('div');
+        cornerCell.className = 'area-row-label area-label-header';
+        mallaGrid.appendChild(cornerCell);
+
+        for (let s = 1; s <= 10; s++) {
+            const header = document.createElement('div');
+            header.className = 'sem-header' + (hitoAfter.has(s) ? ' hito-after' : '');
+            header.innerText = `Sem ${s}`;
+            mallaGrid.appendChild(header);
         }
 
-
-
-        for(let s = 1; s <= 10; s++) {
-
-            const col = document.createElement('div');
-
-            col.className = 'sem-column';
-
-            
-
-            const header = document.createElement('div');
-
-            header.className = 'sem-header';
-
-            header.innerText = `Sem ${s}`;
-
-            col.appendChild(header);
-
-
-
-            semCourses[s].forEach(course => {
-
-                const container = document.createElement('div');
-
-                container.className = `course-card-container area-${course.area}`;
-
-                container.setAttribute('data-name', course.name);
-
-                
-
-                const card = document.createElement('div');
-
-                card.className = 'course-card';
-
-                card.addEventListener('click', (e) => {
-
-                    card.classList.toggle('flipped');
-
-                });
-
-
-
-                // Front side
-
-                const front = document.createElement('div');
-
-                front.className = 'card-front';
-
-
-
-                const nameDiv = document.createElement('div');
-
-                nameDiv.className = 'course-name';
-
-                nameDiv.innerText = course.name;
-
-
-
-                const footer = document.createElement('div');
-
-                footer.className = 'course-footer';
-
-                
-
-                const sctSpan = document.createElement('span');
-
-                sctSpan.className = 'course-sct';
-
-                sctSpan.innerText = `${course.sct} SCT`;
-
-                
-
-                footer.appendChild(sctSpan);
-
-
-
-                const mappings = getMappingsForCourseInDiscipline(course, currentDiscipline);
-
-                if (mappings.length > 0) {
-
-                    const mappedCount = document.createElement('span');
-
-                    mappedCount.style.fontSize = '0.62rem';
-
-                    mappedCount.style.fontWeight = 'bold';
-
-                    mappedCount.style.color = getDisciplineColor(currentDiscipline);
-
-                    mappedCount.innerText = `• ${mappings.length} Est.`;
-
-                    footer.appendChild(mappedCount);
-
-                }
-
-
-
-                front.appendChild(nameDiv);
-
-                front.appendChild(footer);
-
-
-
-                // Back side (Listing mappings with keywords in parentheses)
-
-                const back = document.createElement('div');
-
-                back.className = 'card-back';
-
-
-
-                const backTitle = document.createElement('div');
-
-                backTitle.className = 'back-title';
-
-                backTitle.innerText = 'Tributación:';
-
-                back.appendChild(backTitle);
-
-
-
-                const mappingsAll = getMappingsAll(course);
-
-                if (mappingsAll.length > 0) {
-
-                    mappingsAll.forEach(m => {
-
-                        const item = document.createElement('div');
-                        const prefix = m.std.split('_')[0].toLowerCase();
-                        item.className = `back-item back-item-${prefix}`;
-
-                        const kw = keywords[m.std] || "";
-
-                        const standardShortName = m.std.split('_')[1];
-
-                        const disciplinePrefix = m.std.split('_')[0].substring(0,3).toUpperCase();
-
-                        item.innerHTML = `<span><strong>${disciplinePrefix} ${standardShortName}</strong> (${kw})</span> <span>${m.pct}%</span>`;
-
-                        back.appendChild(item);
-
+        // ── Filas por área ──
+        areaOrder.forEach(area => {
+            const label = document.createElement('div');
+            label.className = `area-row-label area-label-${area.replace(/_/g, '-')}`;
+            label.innerText = areaLabels[area];
+            mallaGrid.appendChild(label);
+
+            for (let s = 1; s <= 10; s++) {
+                const cell = document.createElement('div');
+                cell.className = 'malla-cell' + (hitoAfter.has(s) ? ' hito-after' : '');
+
+                const courses = coursesByAreaSem[area][s];
+
+                if (courses.length > 0) {
+                    courses.forEach(course => {
+
+                        const container = document.createElement('div');
+                        container.className = `course-card-container area-${course.area}`;
+                        container.setAttribute('data-name', course.name);
+
+                        const card = document.createElement('div');
+                        card.className = 'course-card';
+                        card.addEventListener('click', (e) => { card.classList.toggle('flipped'); });
+
+                        // Front side
+                        const front = document.createElement('div');
+                        front.className = 'card-front';
+
+                        const nameDiv = document.createElement('div');
+                        nameDiv.className = 'course-name';
+                        nameDiv.innerText = course.name;
+
+                        const footer = document.createElement('div');
+                        footer.className = 'course-footer';
+
+                        const sctSpan = document.createElement('span');
+                        sctSpan.className = 'course-sct';
+                        sctSpan.innerText = `${course.sct} SCT`;
+                        footer.appendChild(sctSpan);
+
+                        const mappings = getMappingsForCourseInDiscipline(course, currentDiscipline);
+                        if (mappings.length > 0) {
+                            const mappedCount = document.createElement('span');
+                            mappedCount.style.fontSize = '0.62rem';
+                            mappedCount.style.fontWeight = 'bold';
+                            mappedCount.style.color = getDisciplineColor(currentDiscipline);
+                            mappedCount.innerText = `• ${mappings.length} Est.`;
+                            footer.appendChild(mappedCount);
+                        }
+
+                        front.appendChild(nameDiv);
+                        front.appendChild(footer);
+
+                        // Back side
+                        const back = document.createElement('div');
+                        back.className = 'card-back';
+
+                        const backTitle = document.createElement('div');
+                        backTitle.className = 'back-title';
+                        backTitle.innerText = 'Tributación:';
+                        back.appendChild(backTitle);
+
+                        const mappingsAll = getMappingsAll(course);
+                        if (mappingsAll.length > 0) {
+                            mappingsAll.forEach(m => {
+                                const item = document.createElement('div');
+                                const prefix = m.std.split('_')[0].toLowerCase();
+                                item.className = `back-item back-item-${prefix}`;
+                                const kw = keywords[m.std] || "";
+                                const standardShortName = m.std.split('_')[1];
+                                const disciplinePrefix = m.std.split('_')[0].substring(0,3).toUpperCase();
+                                item.innerHTML = `<span><strong>${disciplinePrefix} ${standardShortName}</strong> (${kw})</span> <span>${m.pct}%</span>`;
+                                back.appendChild(item);
+                            });
+                        } else {
+                            const emptyItem = document.createElement('div');
+                            emptyItem.className = 'back-item empty';
+                            emptyItem.innerText = 'No tributa';
+                            back.appendChild(emptyItem);
+                        }
+
+                        card.appendChild(front);
+                        card.appendChild(back);
+                        container.appendChild(card);
+                        cell.appendChild(container);
                     });
-
                 } else {
-
-                    const emptyItem = document.createElement('div');
-
-                    emptyItem.className = 'back-item empty';
-
-                    emptyItem.innerText = 'No tributa';
-
-                    back.appendChild(emptyItem);
-
+                    const placeholder = document.createElement('div');
+                    placeholder.className = 'malla-cell-empty';
+                    cell.appendChild(placeholder);
                 }
 
-
-
-                card.appendChild(front);
-
-                card.appendChild(back);
-
-                container.appendChild(card);
-
-                col.appendChild(container);
-
-            });
-
-
-
-            // Semester SCT total sum
-
-            const sumDiv = document.createElement('div');
-
-            sumDiv.className = 'sem-sum';
-
-            sumDiv.innerText = '30 SCT';
-
-            col.appendChild(sumDiv);
-
-
-
-            mallaGrid.appendChild(col);
-
-            if (s === 4) {
-                const divider = document.createElement('div');
-                divider.className = 'malla-divider';
-                divider.innerHTML = `
-                    <div class="divider-line"></div>
-                    <div class="divider-label">
-                        <strong>Hito formativo</strong><br>
-                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo inicial)</span>
-                    </div>
-                `;
-                mallaGrid.appendChild(divider);
-            } else if (s === 8) {
-                const divider = document.createElement('div');
-                divider.className = 'malla-divider';
-                divider.innerHTML = `
-                    <div class="divider-line"></div>
-                    <div class="divider-label">
-                        <strong>Hito formativo II</strong><br>
-                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo intermedio)</span>
-                    </div>
-                `;
-                mallaGrid.appendChild(divider);
-            } else if (s === 10) {
-                const divider = document.createElement('div');
-                divider.className = 'malla-divider';
-                divider.innerHTML = `
-                    <div class="divider-line"></div>
-                    <div class="divider-label">
-                        <strong>Hito formativo III</strong><br>
-                        <span style="font-size: 0.58rem; font-weight: normal; opacity: 0.95;">(evaluación de ciclo final)</span>
-                    </div>
-                `;
-                mallaGrid.appendChild(divider);
+                mallaGrid.appendChild(cell);
             }
+        });
+
+        // ── Fila de totales SCT ──
+        const sumLabel = document.createElement('div');
+        sumLabel.className = 'area-row-label';
+        sumLabel.style.color = 'var(--upla-cyan)';
+        sumLabel.style.fontWeight = '800';
+        sumLabel.style.minHeight = 'unset';
+        sumLabel.innerText = 'Total SCT';
+        mallaGrid.appendChild(sumLabel);
+
+        for (let s = 1; s <= 10; s++) {
+            const sumDiv = document.createElement('div');
+            sumDiv.className = 'sem-sum' + (hitoAfter.has(s) ? ' hito-after' : '');
+            const total = asignaturas.filter(a => a.sem === s).reduce((acc, a) => acc + a.sct, 0);
+            sumDiv.innerText = `${total} SCT`;
+            mallaGrid.appendChild(sumDiv);
         }
 
     }
