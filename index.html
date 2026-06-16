@@ -3683,76 +3683,81 @@
 const asignaturas = [
         // Semestre 1 (30 SCT, 6 asignaturas)
         { sem: 1, name: "Fundamentos Químicos-Biológicos", sct: 8, area: "basicas_bq", coverage: { Bio_A: 40, Bio_B: 40, Bio_C: 100, Qui_A: 40, Qui_B: 40, Qui_C: 90 } },
-        { sem: 1, name: "Fundamentos Físicos de la Tierra", sct: 8, area: "basicas_fa", coverage: { Fis_A: 50, Fis_B: 40, Fis_D: 80 } },
-        { sem: 1, name: "Alfabetización Científica y Participación Ciudadana", sct: 4, area: "sello", coverage: { Bio_B: 60, Qui_B: 60, Fis_B: 60, Bio_G: 40 } },
-        { sem: 1, name: "Introducción a la Ciencia, Tecnología y Sociedad (CTS)", sct: 4, area: "basicas_fa", coverage: { Bio_B: 40, Qui_B: 40, Fis_B: 40 } },
+        { sem: 1, name: "Fundamentos Físicos Matemáticos", sct: 6, area: "basicas_fa", coverage: { Fis_A: 50, Fis_B: 40, Fis_D: 80 } },
+        { sem: 1, name: "Alfabetización Científica y Participación Ciudadana", sct: 5, area: "sello", coverage: { Bio_B: 60, Qui_B: 60, Fis_B: 60, Bio_G: 40 } },
+        { sem: 1, name: "Introducción a la Ciencia, Tecnología y Sociedad (CTS)", sct: 5, area: "basicas_fa", coverage: { Bio_B: 40, Qui_B: 40, Fis_B: 40 } },
         { sem: 1, name: "Filosofía de la Educación", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 1, name: "TIC para la Vida Académica", sct: 2, area: "instrumental", coverage: {} },
-        
-        // Semestre 2 (29 SCT, 6 asignaturas)
-        { sem: 2, name: "Biología Celular y Fisiología organísmica", sct: 8, area: "basicas_bq", coverage: { Bio_A: 60, Bio_C: 100, Bio_D: 70, Bio_E: 80 } },
-        { sem: 2, name: "Mecánica de Fluidos y sistemas naturales", sct: 6, area: "basicas_fa", coverage: { Fis_A: 70, Fis_D: 100, Fis_E: 70 } },
-        { sem: 2, name: "Introducción a la Didáctica de las Ciencias", sct: 4, area: "pedagogica", coverage: { Bio_A: 50, Qui_A: 50, Fis_A: 50, Bio_B: 50, Qui_B: 50, Fis_B: 50 } },
+
+        // Semestre 2 (30 SCT, 6 asignaturas)
+        { sem: 2, name: "Biología Celular y Fisiología Organísmica", sct: 7, area: "basicas_bq", coverage: { Bio_A: 60, Bio_C: 100, Bio_D: 70, Bio_E: 80 } },
+        { sem: 2, name: "Mecánica de los Sistemas Naturales", sct: 6, area: "basicas_fa", coverage: { Fis_A: 70, Fis_D: 100, Fis_E: 70 } },
+        { sem: 2, name: "Química General e Inorgánica", sct: 6, area: "basicas_bq", coverage: { Qui_A: 60, Qui_C: 100, Qui_D: 80, Qui_E: 80 } },
         { sem: 2, name: "Fundamentos Sociológicos de la Educación", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 2, name: "Psicología del Desarrollo", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 2, name: "Alfabetización Académica", sct: 3, area: "instrumental", coverage: {} },
 
-        // Semestre 3 (29 SCT, 5 asignaturas)
-        { sem: 3, name: "Biodiversidad, Ecología y Cambio Climático", sct: 8, area: "basicas_bq", coverage: { Bio_A: 60, Bio_F: 90, Bio_G: 100 } },
-        { sem: 3, name: "Termodinámica y sistemas energéticos", sct: 8, area: "basicas_fa", coverage: { Fis_A: 70, Fis_C: 80, Fis_E: 100 } },
-        { sem: 3, name: "Diseño de Experiencias de Aprendizaje Científico", sct: 6, area: "pedagogica", coverage: { Bio_A: 50, Qui_A: 50, Fis_A: 50, Bio_B: 50, Qui_B: 50, Fis_B: 50 } },
+        // Semestre 3 (30 SCT, 6 asignaturas)
+        { sem: 3, name: "Química Analítica", sct: 7, area: "basicas_bq", coverage: { Qui_A: 80, Qui_C: 70, Qui_D: 60, Qui_E: 70 } },
+        { sem: 3, name: "Fuerzas de la Naturaleza", sct: 8, area: "basicas_fa", coverage: { Fis_A: 60, Fis_C: 70, Fis_D: 100, Fis_E: 60 } },
+        { sem: 3, name: "Tecnología Educativa para la Enseñanza de las Ciencias Naturales", sct: 4, area: "instrumental", coverage: { Bio_A: 40, Qui_A: 40, Fis_A: 40 } },
         { sem: 3, name: "Psicología Educacional y del Aprendizaje", sct: 4, area: "pedagogica", coverage: {} },
-        { sem: 3, name: "Lengua Extranjera Oral y Escrita: Inglés Elemental", sct: 3, area: "instrumental", coverage: {} },
+        { sem: 3, name: "Lengua Extranjera: Inglés Elemental", sct: 3, area: "instrumental", coverage: {} },
+        { sem: 3, name: "Educación para la Diversidad", sct: 4, area: "pedagogica", coverage: {} },
 
         // Semestre 4 (30 SCT, 6 asignaturas)
-        { sem: 4, name: "Química general e  Inorgánica", sct: 8, area: "basicas_bq", coverage: { Qui_A: 60, Qui_C: 100, Qui_D: 80, Qui_E: 80 } },
-        { sem: 4, name: "Ciencias de la tierra, atmosfera y clima", sct: 8, area: "basicas_fa", coverage: { Fis_A: 50, Fis_D: 60, Fis_F: 95 } },
-        { sem: 4, name: "Pensamiento Sistémico y Sostenibilidad", sct: 4, area: "sello", coverage: { Bio_G: 70, Qui_B: 60, Fis_B: 60 } },
+        { sem: 4, name: "Biodiversidad, Ecología y Cambio Climático", sct: 8, area: "basicas_bq", coverage: { Bio_A: 60, Bio_F: 90, Bio_G: 100 } },
+        { sem: 4, name: "Didáctica de las Ciencias Experimentales", sct: 6, area: "pedagogica", coverage: { Bio_A: 50, Qui_A: 50, Fis_A: 50, Bio_B: 50, Qui_B: 50, Fis_B: 50 } },
+        { sem: 4, name: "Pensamiento Sistémico y Sostenibilidad", sct: 6, area: "sello", coverage: { Bio_G: 70, Qui_B: 60, Fis_B: 60 } },
         { sem: 4, name: "Práctica I: Observación Contextual", sct: 3, area: "practicas", coverage: {} },
         { sem: 4, name: "Introducción a la Didáctica", sct: 4, area: "pedagogica", coverage: {} },
-        { sem: 4, name: "Lengua Extranjera Oral y Escrita: Inglés Básico", sct: 3, area: "instrumental", coverage: {} },
+        { sem: 4, name: "Lengua Extranjera: Inglés Básico", sct: 3, area: "instrumental", coverage: {} },
 
         // Semestre 5 (30 SCT, 7 asignaturas)
         { sem: 5, name: "Química Orgánica y Biomoléculas", sct: 6, area: "basicas_bq", coverage: { Qui_A: 60, Qui_C: 100, Qui_D: 90, Qui_E: 90, Bio_C: 50 } },
-        { sem: 5, name: "Astronomía Cosmología y Ciencias del Espacio", sct: 6, area: "basicas_fa", coverage: { Fis_B: 70, Fis_F: 100 } },
+        { sem: 5, name: "Termodinámica y Sistemas Energéticos", sct: 6, area: "basicas_fa", coverage: { Fis_A: 70, Fis_C: 80, Fis_E: 100 } },
         { sem: 5, name: "Educación para el Desarrollo Sostenible (EDS)", sct: 4, area: "sello", coverage: { Bio_G: 95, Qui_B: 80, Fis_B: 80 } },
         { sem: 5, name: "Práctica II: Inserción Inicial", sct: 3, area: "practicas", coverage: {} },
         { sem: 5, name: "Orientación Educacional para el Desarrollo de la Persona", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 5, name: "Curriculum", sct: 4, area: "pedagogica", coverage: { Bio_A: 80, Qui_A: 80, Fis_A: 80, Bio_B: 80, Qui_B: 80, Fis_B: 80 } },
-        { sem: 5, name: "Lengua Extranjera Oral y Escrita: Inglés Superior", sct: 3, area: "instrumental", coverage: {} },
+        { sem: 5, name: "Lengua Extranjera: Inglés Superior", sct: 3, area: "instrumental", coverage: {} },
 
-        // Semestre 6 (24 SCT, 6 asignaturas)
-        { sem: 6, name: "Bioquímica", sct: 4, area: "basicas_bq", coverage: { Bio_C: 90, Bio_D: 90, Qui_D: 90, Qui_E: 80, Qui_F: 95 } },
-        { sem: 6, name: "Integración de las Ciencias Naturales I", sct: 4, area: "basicas_fa", coverage: { Bio_A: 90, Bio_B: 90, Qui_A: 90, Qui_B: 90, Fis_A: 90, Fis_B: 90 } },
+        // Semestre 6 (30 SCT, 6 asignaturas)
+        { sem: 6, name: "Bioquímica y Termodinámica Biológica", sct: 8, area: "basicas_bq", coverage: { Bio_C: 90, Bio_D: 90, Qui_D: 90, Qui_E: 80, Qui_F: 95 } },
+        { sem: 6, name: "Diseño de Experiencias de Aprendizaje", sct: 6, area: "pedagogica", coverage: { Bio_A: 50, Qui_A: 50, Fis_A: 50, Bio_B: 50, Qui_B: 50, Fis_B: 50 } },
         { sem: 6, name: "Política y Gestión Educativa", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 6, name: "Evaluación del Aprendizaje", sct: 4, area: "pedagogica", coverage: {} },
         { sem: 6, name: "Práctica III: Ayudantía y Co-docencia", sct: 4, area: "practicas", coverage: {} },
-        { sem: 6, name: "Ciencias para la Ciudadanía II", sct: 4, area: "sello", coverage: { Bio_B: 60, Qui_B: 60, Fis_B: 60 } },
+        { sem: 6, name: "Problemas Socioambientales y Sostenibilidad", sct: 4, area: "sello", coverage: { Bio_G: 80, Qui_B: 70, Fis_B: 70 } },
 
-        // Semestre 7 (27 SCT, 7 asignaturas)
-        { sem: 7, name: "Integración de las Ciencias Naturales II", sct: 4, area: "basicas_fa", coverage: { Bio_A: 100, Bio_B: 100, Qui_A: 100, Qui_B: 100, Fis_A: 100, Fis_B: 100 } },
-        { sem: 7, name: "Estrategias para Restaurar el Medio Ambiente y Conservación", sct: 4, area: "sello", coverage: { Bio_G: 95, Qui_B: 80, Fis_B: 80 } },
+        // Semestre 7 (30 SCT, 7 asignaturas)
+        { sem: 7, name: "Didáctica: Metodología de la Enseñanza de las Ciencias", sct: 6, area: "pedagogica", coverage: { Bio_A: 80, Qui_A: 80, Fis_A: 80, Bio_B: 80, Qui_B: 80, Fis_B: 80 } },
+        { sem: 7, name: "Ciencias para la Ciudadanía", sct: 4, area: "sello", coverage: { Bio_B: 60, Qui_B: 60, Fis_B: 60 } },
         { sem: 7, name: "Práctica IV: Aula y Microenseñanza", sct: 4, area: "practicas", coverage: {} },
-        { sem: 7, name: "Proyectos Interdisciplinarios en Ciencias para la Ciudadanía", sct: 5, area: "sello", coverage: { Bio_A: 100, Bio_B: 90, Qui_A: 100, Qui_B: 90, Fis_A: 100, Fis_B: 90, Bio_G: 90 } },
         { sem: 7, name: "Lectura y Escritura para el Desarrollo Personal", sct: 4, area: "instrumental", coverage: {} },
         { sem: 7, name: "Área Formación Complementaria I", sct: 2, area: "instrumental", coverage: {} },
         { sem: 7, name: "Investigación Educacional", sct: 4, area: "pedagogica", coverage: {} },
+        { sem: 7, name: "Ciencias de la Tierra y del Espacio", sct: 6, area: "basicas_fa", coverage: { Fis_A: 50, Fis_D: 60, Fis_F: 95, Bio_F: 50 } },
 
-        // Semestre 8 (19 SCT, 3 asignaturas)
+        // Semestre 8 (30 SCT, 5 asignaturas)
         { sem: 8, name: "Práctica V: Intervención Pedagógica", sct: 5, area: "practicas", coverage: {} },
         { sem: 8, name: "Seminario de Tesis", sct: 8, area: "pedagogica", coverage: { Bio_A: 100, Qui_A: 100, Fis_A: 100 } },
-        { sem: 8, name: "Taller de Reflexión sobre la Práctica Pedagógica", sct: 6, area: "pedagogica", coverage: {} },
+        { sem: 8, name: "Integración de las Ciencias Naturales I", sct: 7, area: "basicas_fa", coverage: { Bio_A: 90, Bio_B: 90, Qui_A: 90, Qui_B: 90, Fis_A: 90, Fis_B: 90 } },
+        { sem: 8, name: "Metodología de la Investigación Científica", sct: 4, area: "pedagogica", coverage: { Bio_A: 70, Qui_A: 70, Fis_A: 70 } },
+        { sem: 8, name: "Didáctica Avanzada", sct: 6, area: "pedagogica", coverage: { Bio_A: 100, Bio_B: 100, Qui_A: 100, Qui_B: 100, Fis_A: 100, Fis_B: 100 } },
 
-        // Semestre 9 (37 SCT, 4 asignaturas)
+        // Semestre 9 (30 SCT, 6 asignaturas)
         { sem: 9, name: "Área Formación Complementaria II", sct: 2, area: "instrumental", coverage: {} },
-        { sem: 9, name: "Seminario de Integración Profesional (FCC502)", sct: 15, area: "cierre", coverage: { Bio_A: 100, Qui_A: 100, Fis_A: 100 } },
-        { sem: 9, name: "Práctica VI: Reflexión y Autonomía", sct: 5, area: "practicas", coverage: {} },
-        { sem: 9, name: "Didáctica Avanzada y Laboratorio de Ciencias en el Aula", sct: 15, area: "pedagogica", coverage: { Bio_A: 100, Bio_B: 100, Qui_A: 100, Qui_B: 100, Fis_A: 100, Fis_B: 100 } },
+        { sem: 9, name: "Seminario de Integración Profesional", sct: 4, area: "cierre", coverage: { Bio_A: 100, Qui_A: 100, Fis_A: 100 } },
+        { sem: 9, name: "Práctica VI: Reflexión y Autonomía", sct: 6, area: "practicas", coverage: {} },
+        { sem: 9, name: "Taller de Reflexión sobre la Práctica Pedagógica", sct: 6, area: "pedagogica", coverage: {} },
+        { sem: 9, name: "Integración de las Ciencias Naturales II", sct: 6, area: "basicas_fa", coverage: { Bio_A: 100, Bio_B: 100, Qui_A: 100, Qui_B: 100, Fis_A: 100, Fis_B: 100 } },
+        { sem: 9, name: "Proyectos Interdisciplinarios en Ciencias para la Ciudadanía", sct: 6, area: "sello", coverage: { Bio_A: 100, Bio_B: 90, Qui_A: 100, Qui_B: 90, Fis_A: 100, Fis_B: 90, Bio_G: 90 } },
 
-        // Semestre 10 (52 SCT, 3 asignaturas)
+        // Semestre 10 (28 SCT, 3 asignaturas)
         { sem: 10, name: "Sello Institucional", sct: 6, area: "sello", coverage: {} },
-        { sem: 10, name: "Práctica Profesional", sct: 16, area: "practicas", coverage: {} },
-        { sem: 10, name: "Trabajo de Titulación (FP503)", sct: 30, area: "cierre", coverage: { Bio_A: 100, Qui_A: 100, Fis_A: 100 } }
+        { sem: 10, name: "Práctica Profesional", sct: 10, area: "practicas", coverage: {} },
+        { sem: 10, name: "Trabajo de Titulación (FP503)", sct: 12, area: "cierre", coverage: { Bio_A: 100, Qui_A: 100, Fis_A: 100 } }
     ];
 
 
