@@ -1138,7 +1138,7 @@
 
         .malla-grid {
             display: grid;
-            grid-template-columns: repeat(10, 1fr);
+            grid-template-columns: repeat(4, 1fr) 16px repeat(4, 1fr) 16px repeat(2, 1fr);
             gap: 0.5rem;
             position: relative;
             align-items: start;
@@ -1173,10 +1173,18 @@
             opacity: 0.35;
         }
 
-        .hito-after {
-            border-right: 2px dashed var(--upla-cyan);
-            padding-right: 0.4rem;
-            margin-right: 0.15rem;
+        .hito-col {
+            align-self: stretch;
+            display: flex;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hito-col-line {
+            width: 0;
+            border-left: 2.5px dashed var(--upla-cyan);
+            opacity: 0.65;
         }
 
         .sem-column {
@@ -2744,7 +2752,7 @@
             }
             .malla-grid {
                 display: grid !important;
-                grid-template-columns: repeat(10, 1fr) !important;
+                grid-template-columns: repeat(4, 1fr) 10px repeat(4, 1fr) 10px repeat(2, 1fr) !important;
                 gap: 0.3rem !important;
                 width: 100% !important;
                 padding-bottom: 0 !important;
@@ -2753,9 +2761,8 @@
             .malla-cell-empty {
                 height: 95px !important;
             }
-            .hito-after {
-                border-right-width: 1.5px !important;
-                padding-right: 0.2rem !important;
+            .hito-col-line {
+                border-left-width: 1.5px !important;
             }
             .sem-header {
                 font-size: 0.7rem !important;
@@ -4297,13 +4304,13 @@ const asignaturas = [
 
         const areaOrder = ['instrumental', 'pedagogica', 'basicas_bq', 'basicas_fa', 'practicas', 'sello', 'cierre'];
         const areaConfig = {
-            'instrumental': { label: 'Instrumental',            color: 'var(--color-instrumental)' },
-            'pedagogica':   { label: 'Pedagógica',              color: 'var(--color-pedagogica)' },
-            'basicas_bq':   { label: 'CC. Básicas — Biología / Química', color: 'var(--color-basicas-bq)' },
+            'instrumental': { label: 'Instrumental',                      color: 'var(--color-instrumental)' },
+            'pedagogica':   { label: 'Pedagógica',                        color: 'var(--color-pedagogica)' },
+            'basicas_bq':   { label: 'CC. Básicas — Biología / Química',  color: 'var(--color-basicas-bq)' },
             'basicas_fa':   { label: 'CC. Básicas — Física / Astronomía', color: 'var(--color-basicas-fa)' },
-            'practicas':    { label: 'Prácticas',               color: 'var(--color-practicas)' },
-            'sello':        { label: 'Sello / Vida Sostenible', color: 'var(--color-sello)' },
-            'cierre':       { label: 'Cierre / Titulación',     color: 'var(--color-cierre)' }
+            'practicas':    { label: 'Prácticas',                         color: 'var(--color-practicas)' },
+            'sello':        { label: 'Sello / Vida Sostenible',           color: 'var(--color-sello)' },
+            'cierre':       { label: 'Cierre / Titulación',               color: 'var(--color-cierre)' }
         };
 
         // Lookup: area -> sem -> [courses]
@@ -4315,21 +4322,30 @@ const asignaturas = [
             }
         });
 
-        const hitoAfter = new Set([4, 8]);
+        // Crea una celda separadora de hito (columna de 16px con línea punteada)
+        function makeHitoCell() {
+            const col = document.createElement('div');
+            col.className = 'hito-col';
+            const line = document.createElement('div');
+            line.className = 'hito-col-line';
+            col.appendChild(line);
+            return col;
+        }
 
-        // ── Fila de cabecera (sem headers) ──
+        // ── Fila cabecera de semestres ──
         for (let s = 1; s <= 10; s++) {
             const header = document.createElement('div');
-            header.className = 'sem-header' + (hitoAfter.has(s) ? ' hito-after' : '');
+            header.className = 'sem-header';
             header.innerText = `Sem ${s}`;
             mallaGrid.appendChild(header);
+            if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
         }
 
         // ── Filas por área ──
         areaOrder.forEach(area => {
             const cfg = areaConfig[area];
 
-            // Fila separadora — abarca las 10 columnas
+            // Separador de área — abarca TODAS las columnas (incluye las 2 de hito)
             const sectionHeader = document.createElement('div');
             sectionHeader.className = 'area-section-header';
             sectionHeader.style.background = cfg.color;
@@ -4339,7 +4355,7 @@ const asignaturas = [
             // Fila de tarjetas
             for (let s = 1; s <= 10; s++) {
                 const cell = document.createElement('div');
-                cell.className = 'malla-cell' + (hitoAfter.has(s) ? ' hito-after' : '');
+                cell.className = 'malla-cell';
 
                 const courses = coursesByAreaSem[area][s];
 
@@ -4423,16 +4439,18 @@ const asignaturas = [
                 }
 
                 mallaGrid.appendChild(cell);
+                if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
             }
         });
 
         // ── Fila totales SCT ──
         for (let s = 1; s <= 10; s++) {
             const sumDiv = document.createElement('div');
-            sumDiv.className = 'sem-sum' + (hitoAfter.has(s) ? ' hito-after' : '');
+            sumDiv.className = 'sem-sum';
             const total = asignaturas.filter(a => a.sem === s).reduce((acc, a) => acc + a.sct, 0);
             sumDiv.innerText = `${total} SCT`;
             mallaGrid.appendChild(sumDiv);
+            if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
         }
 
     }
