@@ -1176,15 +1176,37 @@
         .hito-col {
             align-self: stretch;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
             padding: 0;
             margin: 0;
+            gap: 0.3rem;
         }
 
         .hito-col-line {
+            flex: 1;
             width: 0;
+            min-height: 10px;
             border-left: 2.5px dashed var(--upla-cyan);
             opacity: 0.65;
+        }
+
+        .hito-col-label {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            transform: rotate(180deg);
+            font-size: 0.54rem;
+            font-weight: 800;
+            color: var(--upla-cyan);
+            text-transform: uppercase;
+            letter-spacing: 0.07em;
+            white-space: nowrap;
+            background: #f0f9ff;
+            border: 1.5px solid var(--upla-cyan);
+            border-radius: 4px;
+            padding: 0.35rem 0.15rem;
+            line-height: 1;
         }
 
         .sem-column {
@@ -1195,41 +1217,7 @@
             position: relative;
         }
 
-        .malla-divider {
-            position: relative;
-            width: 2px;
-            flex: 0 0 2px;
-            margin: 0 0.5rem;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
 
-        .divider-line {
-            width: 0;
-            height: 100%;
-            border-left: 2.5px dashed var(--upla-cyan);
-            opacity: 0.75;
-        }
-
-        .divider-label {
-            position: absolute;
-            bottom: -3.5rem;
-            left: 50%;
-            transform: translateX(-50%);
-            white-space: nowrap;
-            font-size: 0.65rem;
-            font-weight: 800;
-            color: var(--upla-mix-20-80);
-            text-align: center;
-            background: #ffffff;
-            padding: 0.3rem 0.6rem;
-            border: 1.5px solid var(--upla-cyan);
-            border-radius: 6px;
-            box-shadow: var(--shadow-md);
-            z-index: 10;
-            line-height: 1.2;
-        }
 
 
 
@@ -2796,21 +2784,6 @@
                 padding: 0.4rem !important;
                 border-radius: 6px !important;
             }
-            .malla-divider {
-                margin: 0 0.2rem !important;
-                width: 1px !important;
-                flex: 0 0 1px !important;
-            }
-            .divider-line {
-                border-left-width: 1.5px !important;
-            }
-            .divider-label {
-                bottom: -2.8rem !important;
-                font-size: 0.52rem !important;
-                padding: 0.15rem 0.4rem !important;
-                border-radius: 4px !important;
-                border-width: 1px !important;
-            }
         }
     
 </style>
@@ -4322,13 +4295,19 @@ const asignaturas = [
             }
         });
 
-        // Crea una celda separadora de hito (columna de 16px con línea punteada)
-        function makeHitoCell() {
+        // Celda separadora de hito: línea punteada + etiqueta vertical opcional
+        function makeHitoCell(label) {
             const col = document.createElement('div');
             col.className = 'hito-col';
             const line = document.createElement('div');
             line.className = 'hito-col-line';
             col.appendChild(line);
+            if (label) {
+                const lbl = document.createElement('div');
+                lbl.className = 'hito-col-label';
+                lbl.innerText = label;
+                col.appendChild(lbl);
+            }
             return col;
         }
 
@@ -4338,14 +4317,15 @@ const asignaturas = [
             header.className = 'sem-header';
             header.innerText = `Sem ${s}`;
             mallaGrid.appendChild(header);
-            if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
+            if (s === 4) mallaGrid.appendChild(makeHitoCell('Hito Formativo I'));
+            if (s === 8) mallaGrid.appendChild(makeHitoCell('Hito Formativo II'));
         }
 
         // ── Filas por área ──
         areaOrder.forEach(area => {
             const cfg = areaConfig[area];
 
-            // Separador de área — abarca TODAS las columnas (incluye las 2 de hito)
+            // Separador de área — abarca TODAS las columnas incluidas las 2 de hito
             const sectionHeader = document.createElement('div');
             sectionHeader.className = 'area-section-header';
             sectionHeader.style.background = cfg.color;
@@ -4439,7 +4419,8 @@ const asignaturas = [
                 }
 
                 mallaGrid.appendChild(cell);
-                if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
+                if (s === 4) mallaGrid.appendChild(makeHitoCell());
+                if (s === 8) mallaGrid.appendChild(makeHitoCell());
             }
         });
 
@@ -4450,7 +4431,8 @@ const asignaturas = [
             const total = asignaturas.filter(a => a.sem === s).reduce((acc, a) => acc + a.sct, 0);
             sumDiv.innerText = `${total} SCT`;
             mallaGrid.appendChild(sumDiv);
-            if (s === 4 || s === 8) mallaGrid.appendChild(makeHitoCell());
+            if (s === 4) mallaGrid.appendChild(makeHitoCell());
+            if (s === 8) mallaGrid.appendChild(makeHitoCell());
         }
 
     }
