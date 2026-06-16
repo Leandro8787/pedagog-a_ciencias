@@ -1138,27 +1138,27 @@
 
         .malla-grid {
             display: grid;
-            grid-template-columns: 108px repeat(10, 1fr);
+            grid-template-columns: repeat(10, 1fr);
             gap: 0.5rem;
             position: relative;
             align-items: start;
             padding-bottom: 1rem;
         }
 
-        .area-row-label {
+        .area-section-header {
+            grid-column: 1 / -1;
             display: flex;
             align-items: center;
-            justify-content: flex-end;
-            padding: 0.3rem 0.5rem;
-            font-size: 0.62rem;
-            font-weight: 700;
-            color: var(--text-secondary);
-            text-align: right;
-            line-height: 1.25;
-            min-height: 125px;
+            gap: 0.5rem;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.68rem;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: #ffffff;
+            margin-top: 0.25rem;
         }
-
-        .area-label-header { min-height: unset; }
 
         .malla-cell {
             display: flex;
@@ -1167,7 +1167,7 @@
         }
 
         .malla-cell-empty {
-            height: 125px;
+            height: 150px;
             border: 1.5px dashed #e2e8f0;
             border-radius: 10px;
             opacity: 0.35;
@@ -1259,7 +1259,7 @@
 
             perspective: 1000px;
 
-            height: 125px;
+            height: 150px;
 
             width: 100%;
 
@@ -1311,7 +1311,7 @@
 
             border: 1px solid var(--border-color);
 
-            padding: 1rem 0.8rem;
+            padding: 0.55rem 0.55rem 0.55rem 0.75rem;
 
             display: flex;
 
@@ -1415,17 +1415,17 @@
 
         .course-name {
 
-            font-size: 0.8rem;
+            font-size: 0.7rem;
 
             font-weight: 700;
 
-            line-height: 1.4;
+            line-height: 1.35;
 
             color: var(--text-primary);
 
             display: -webkit-box;
 
-            -webkit-line-clamp: 3;
+            -webkit-line-clamp: 4;
 
             -webkit-box-orient: vertical;
 
@@ -2744,16 +2744,12 @@
             }
             .malla-grid {
                 display: grid !important;
-                grid-template-columns: 80px repeat(10, 1fr) !important;
+                grid-template-columns: repeat(10, 1fr) !important;
                 gap: 0.3rem !important;
                 width: 100% !important;
                 padding-bottom: 0 !important;
             }
-            .area-row-label {
-                font-size: 0.52rem !important;
-                padding: 0.2rem 0.3rem !important;
-                min-height: 95px !important;
-            }
+
             .malla-cell-empty {
                 height: 95px !important;
             }
@@ -2767,7 +2763,10 @@
                 border-radius: 6px !important;
             }
             .course-card-container {
-                height: 95px !important;
+                height: 115px !important;
+            }
+            .malla-cell-empty {
+                height: 115px !important;
             }
             .course-card {
                 box-shadow: none !important;
@@ -4297,14 +4296,14 @@ const asignaturas = [
         mallaGrid.innerHTML = '';
 
         const areaOrder = ['instrumental', 'pedagogica', 'basicas_bq', 'basicas_fa', 'practicas', 'sello', 'cierre'];
-        const areaLabels = {
-            'instrumental':  'Instrumental',
-            'pedagogica':    'Pedagógica',
-            'basicas_bq':    'CC. Básicas BQ',
-            'basicas_fa':    'CC. Básicas FA',
-            'practicas':     'Prácticas',
-            'sello':         'Sello / Sostenible',
-            'cierre':        'Cierre / Titulación'
+        const areaConfig = {
+            'instrumental': { label: 'Instrumental',            color: 'var(--color-instrumental)' },
+            'pedagogica':   { label: 'Pedagógica',              color: 'var(--color-pedagogica)' },
+            'basicas_bq':   { label: 'CC. Básicas — Biología / Química', color: 'var(--color-basicas-bq)' },
+            'basicas_fa':   { label: 'CC. Básicas — Física / Astronomía', color: 'var(--color-basicas-fa)' },
+            'practicas':    { label: 'Prácticas',               color: 'var(--color-practicas)' },
+            'sello':        { label: 'Sello / Vida Sostenible', color: 'var(--color-sello)' },
+            'cierre':       { label: 'Cierre / Titulación',     color: 'var(--color-cierre)' }
         };
 
         // Lookup: area -> sem -> [courses]
@@ -4319,10 +4318,6 @@ const asignaturas = [
         const hitoAfter = new Set([4, 8]);
 
         // ── Fila de cabecera (sem headers) ──
-        const cornerCell = document.createElement('div');
-        cornerCell.className = 'area-row-label area-label-header';
-        mallaGrid.appendChild(cornerCell);
-
         for (let s = 1; s <= 10; s++) {
             const header = document.createElement('div');
             header.className = 'sem-header' + (hitoAfter.has(s) ? ' hito-after' : '');
@@ -4332,11 +4327,16 @@ const asignaturas = [
 
         // ── Filas por área ──
         areaOrder.forEach(area => {
-            const label = document.createElement('div');
-            label.className = `area-row-label area-label-${area.replace(/_/g, '-')}`;
-            label.innerText = areaLabels[area];
-            mallaGrid.appendChild(label);
+            const cfg = areaConfig[area];
 
+            // Fila separadora — abarca las 10 columnas
+            const sectionHeader = document.createElement('div');
+            sectionHeader.className = 'area-section-header';
+            sectionHeader.style.background = cfg.color;
+            sectionHeader.innerText = cfg.label;
+            mallaGrid.appendChild(sectionHeader);
+
+            // Fila de tarjetas
             for (let s = 1; s <= 10; s++) {
                 const cell = document.createElement('div');
                 cell.className = 'malla-cell' + (hitoAfter.has(s) ? ' hito-after' : '');
@@ -4352,9 +4352,9 @@ const asignaturas = [
 
                         const card = document.createElement('div');
                         card.className = 'course-card';
-                        card.addEventListener('click', (e) => { card.classList.toggle('flipped'); });
+                        card.addEventListener('click', () => { card.classList.toggle('flipped'); });
 
-                        // Front side
+                        // Front
                         const front = document.createElement('div');
                         front.className = 'card-front';
 
@@ -4373,7 +4373,7 @@ const asignaturas = [
                         const mappings = getMappingsForCourseInDiscipline(course, currentDiscipline);
                         if (mappings.length > 0) {
                             const mappedCount = document.createElement('span');
-                            mappedCount.style.fontSize = '0.62rem';
+                            mappedCount.style.fontSize = '0.6rem';
                             mappedCount.style.fontWeight = 'bold';
                             mappedCount.style.color = getDisciplineColor(currentDiscipline);
                             mappedCount.innerText = `• ${mappings.length} Est.`;
@@ -4383,7 +4383,7 @@ const asignaturas = [
                         front.appendChild(nameDiv);
                         front.appendChild(footer);
 
-                        // Back side
+                        // Back
                         const back = document.createElement('div');
                         back.className = 'card-back';
 
@@ -4426,15 +4426,7 @@ const asignaturas = [
             }
         });
 
-        // ── Fila de totales SCT ──
-        const sumLabel = document.createElement('div');
-        sumLabel.className = 'area-row-label';
-        sumLabel.style.color = 'var(--upla-cyan)';
-        sumLabel.style.fontWeight = '800';
-        sumLabel.style.minHeight = 'unset';
-        sumLabel.innerText = 'Total SCT';
-        mallaGrid.appendChild(sumLabel);
-
+        // ── Fila totales SCT ──
         for (let s = 1; s <= 10; s++) {
             const sumDiv = document.createElement('div');
             sumDiv.className = 'sem-sum' + (hitoAfter.has(s) ? ' hito-after' : '');
